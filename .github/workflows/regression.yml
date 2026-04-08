@@ -1,0 +1,103 @@
+name: regression
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+# Cancel in-progress runs for the same ref when a new one starts.
+concurrency:
+  group: regression-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: regression suite (${{ matrix.os }}, node ${{ matrix.node }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+        node: [18, 20, 22]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        # We need full history because the C2 check (and the
+        # c2-history-only fixture) inspect git log on the workspace.
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js ${{ matrix.node }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+
+      - name: Verify zero dependencies
+        # The scanner has no runtime deps. Make sure no one snuck a
+        # package.json with dependencies into the published surface.
+        run: |
+          if [ -f package.json ]; then
+            echo "predeploy-audit must not have a top-level package.json"
+            exit 1
+          fi
+          echo "no top-level package.json — zero dependencies confirmed"
+
+      - name: Run scanner against the wobblr demo
+        env:
+          WS: ${{ github.workspace }}
+        run: |
+          # Wobblr is the frozen contract: 7 critical / 1 high / 1 low
+          # / 1 manual-check. Sanity-check that the scanner runs and
+          # produces output on a real target.
+          mkdir -p /tmp/wobblr-snapshot
+          cp -R "$WS/demo-vulnerable-app/wobblr/." /tmp/wobblr-snapshot/
+          cd /tmp/wobblr-snapshot
+          git init -q -b main
+          git -c user.email=ci@example.com -c user.name=ci add -A
+          git -c user.email=ci@example.com -c user.name=ci commit -q -m "snapshot"
+          node "$WS/skill/scanner/predeploy-audit.mjs" .
+
+      - name: Run the full regression suite
+        # The binding contract from Phase 4 of the project design.
+        # If this prints anything other than "7 passed, 0 failed",
+        # the scanner has a regression and the merge is rejected.
+        run: node tests/run-tests.mjs
+
+      - name: Verify scanner exit code in deploy-gate mode
+        env:
+          WS: ${{ github.workspace }}
+        run: |
+          # Wobblr (intentionally vulnerable) must exit non-zero in
+          # deploy-gate mode. A clean baseline must exit zero. This
+          # protects the CI integration story documented in the README.
+          set +e
+          mkdir -p /tmp/wobblr-snapshot2
+          cp -R "$WS/demo-vulnerable-app/wobblr/." /tmp/wobblr-snapshot2/
+          cd /tmp/wobblr-snapshot2
+          git init -q -b main
+          git -c user.email=ci@example.com -c user.name=ci add -A
+          git -c user.email=ci@example.com -c user.name=ci commit -q -m "snapshot"
+          node "$WS/skill/scanner/predeploy-audit.mjs" . --deploy-gate
+          rc=$?
+          if [ "$rc" -eq 0 ]; then
+            echo "deploy-gate mode returned 0 on the wobblr demo (should be non-zero)"
+            exit 1
+          fi
+          echo "deploy-gate mode correctly returned $rc on wobblr"
+
+          mkdir -p /tmp/clean-snapshot
+          cp -R "$WS/tests/fixtures/clean-baseline/." /tmp/clean-snapshot/
+          cd /tmp/clean-snapshot
+          git init -q -b main
+          git -c user.email=ci@example.com -c user.name=ci add -A
+          git -c user.email=ci@example.com -c user.name=ci commit -q -m "snapshot"
+          node "$WS/skill/scanner/predeploy-audit.mjs" . --deploy-gate
+          rc=$?
+          if [ "$rc" -ne 0 ]; then
+            echo "deploy-gate mode returned $rc on the clean baseline (should be 0)"
+            exit 1
+          fi
+          echo "deploy-gate mode correctly returned 0 on clean baseline"

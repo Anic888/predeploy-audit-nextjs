@@ -1,0 +1,50 @@
+┌──────────────────────────────────────────────────────────────────┐
+│ TWITTER / X THREAD — ready to paste                              │
+│                                                                  │
+│ All 4 tweets verified ≤ 280 chars (URL counted as 23 per t.co)   │
+│                                                                  │
+│ How to post:                                                     │
+│   1. Paste tweet 1, post                                         │
+│   2. Reply to your own tweet 1 with tweet 2, post                │
+│   3. Reply to tweet 2 with tweet 3, post                         │
+│   4. Reply to tweet 3 with tweet 4, post                         │
+│                                                                  │
+│ Or use a thread tool (Typefully, Tweet Hunter, etc.) and paste   │
+│ each tweet into its own block.                                   │
+└──────────────────────────────────────────────────────────────────┘
+
+═══ 1/4 (200 chars) ═══════════════════════════════════════════════
+
+I built a tiny pre-deploy security scanner for indie Next.js apps.
+
+9 checks. ~80ms. No config. No npm install. Catches the small set of mistakes that actually burn solo devs.
+
+https://github.com/Anic888/predeploy-audit-nextjs
+
+═══ 2/4 (255 chars) ═══════════════════════════════════════════════
+
+Why a tool when GitHub already scans for secrets?
+
+GitHub catches known-format keys after you push. It doesn't know your SUPABASE_SERVICE_ROLE_KEY is in a "use client" component.
+
+It doesn't check Stripe webhook signatures. It doesn't read next.config.js.
+
+═══ 3/4 (275 chars) ═══════════════════════════════════════════════
+
+The Next.js middleware auth bypass (CVE-2025-29927, CVSS 9.1) is fixed in 14.2.25 / 15.2.3.
+
+Vercel auto-patches it. Railway / Fly.io / Docker do NOT.
+
+This tool detects which host you're targeting and frames the same vuln correctly: LOW for Vercel, CRITICAL for self-hosted.
+
+═══ 4/4 (227 chars) ═══════════════════════════════════════════════
+
+Trust > recall.
+
+Ships with a 7-fixture regression suite (vulnerable demo app + clean baseline + 5 edge cases). Any change that breaks 7-passed-0-failed gets rejected.
+
+MIT. Single Node file. Zero deps.
+
+https://github.com/Anic888/predeploy-audit-nextjs
+
+═══════════════════════════════════════════════════════════════════

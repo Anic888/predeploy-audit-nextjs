@@ -1,5 +1,8 @@
 # predeploy-audit
 
+[![regression](https://github.com/Anic888/predeploy-audit-nextjs/actions/workflows/regression.yml/badge.svg)](https://github.com/Anic888/predeploy-audit-nextjs/actions/workflows/regression.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](./LICENSE)
+
 > A tiny, fast, low-noise deploy audit for vibe-coded Next.js apps.
 
 You built something over a weekend. It works. You're about to push to
