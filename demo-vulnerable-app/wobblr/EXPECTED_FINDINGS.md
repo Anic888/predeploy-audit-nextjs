@@ -18,7 +18,7 @@ done.
 > **Phase 4 amendment (Apr 2026):** the original Phase 3 freeze was 6 CRIT
 > / 8 total. Phase 4 implementation surfaced one legitimate C3 finding I
 > missed during the freeze: the `whsec_DEMOFAKE…` Stripe webhook signing
-> secret on `.env.local:23`. It is a real `whsec_`-format secret in a
+> secret on `.env.local:25`. It is a real `whsec_`-format secret in a
 > tracked file and the scanner correctly catches it. Suppressing it to
 > preserve the original count would have been "softening standards
 > during implementation" — the exact failure mode the Phase 4 rules
@@ -65,7 +65,7 @@ that isn't in the manual-check section.
 ### V2 — C3 — Hardcoded Stripe live key in tracked source
 
 - **Severity:** 🟥 CRITICAL
-- **File:** `.env.local:21` (`STRIPE_SECRET_KEY=sk_live_DEMOFAKE…`)
+- **File:** `.env.local:23` (`STRIPE_SECRET_KEY=sk_live_DEMOFAKE…`)
 - **What's wrong:** A `sk_live_`-prefixed Stripe secret format
   appears in a tracked file. Even though it's a fake placeholder,
   the *shape* matches C3's narrow detector and the scanner must
@@ -83,7 +83,7 @@ that isn't in the manual-check section.
 ### V2b — C3 — Hardcoded Stripe webhook signing secret in tracked source (Phase 4 amendment)
 
 - **Severity:** 🟥 CRITICAL
-- **File:** `.env.local:23` (`STRIPE_WEBHOOK_SECRET=whsec_DEMOFAKE…`)
+- **File:** `.env.local:25` (`STRIPE_WEBHOOK_SECRET=whsec_DEMOFAKE…`)
 - **What's wrong:** A `whsec_`-prefixed Stripe webhook signing
   secret in a tracked file. Same root cause as V2, different key.
 - **Why it fires:** Identical to V2's mechanism but the matched
