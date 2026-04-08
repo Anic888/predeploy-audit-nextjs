@@ -1,0 +1,9 @@
+node_modules/
+.next/
+dist/
+out/
+.DS_Store
+*.log
+
+# Fixtures and the demo app keep their own committed state — never
+# touch their .git directories from the top-level repo.

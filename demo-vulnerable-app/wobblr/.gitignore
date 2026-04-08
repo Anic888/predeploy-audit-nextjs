@@ -1,0 +1,11 @@
+# BUG (intentional): .env.local is NOT in this .gitignore.
+# This is the original mistake that causes V1 (C1: tracked .env in git)
+# and V2 (C3: hardcoded Stripe key in tracked source).
+
+node_modules/
+.next/
+dist/
+out/
+*.tsbuildinfo
+next-env.d.ts
+.DS_Store
