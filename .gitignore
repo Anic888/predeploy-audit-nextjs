@@ -5,5 +5,8 @@ out/
 .DS_Store
 *.log
 
-# Fixtures and the demo app keep their own committed state — never
-# touch their .git directories from the top-level repo.
+# Local-only working files: launch copy drafts, scratch notes, etc.
+# Keep these out of the public repo — they're operational artifacts,
+# not part of the product.
+launch/
+LAUNCH.md
