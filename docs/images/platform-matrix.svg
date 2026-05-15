@@ -1,0 +1,125 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 480" role="img" aria-label="predeploy-audit platform-aware severity matrix and tri-state scan outcomes">
+  <defs>
+    <linearGradient id="pmBg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#000000"/>
+      <stop offset="100%" stop-color="#0a0a0a"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="900" height="480" rx="12" fill="url(#pmBg)" stroke="#262626"/>
+
+  <!-- Title -->
+  <text x="450" y="36" text-anchor="middle" font-family="ui-sans-serif, system-ui, sans-serif" font-size="18" font-weight="700" fill="#ffffff">Same CVE · different severity by platform</text>
+  <text x="450" y="58" text-anchor="middle" font-family="ui-sans-serif, system-ui, sans-serif" font-size="12" fill="#a3a3a3">A scanner that knows where you're deploying — not just what's in your code.</text>
+
+  <!-- Severity matrix table -->
+  <g transform="translate(80,90)" font-family="ui-sans-serif, system-ui, sans-serif">
+    <!-- Header row -->
+    <g font-size="11" font-weight="700" fill="#a3a3a3" letter-spacing="1">
+      <text x="0" y="14">CVE / PATTERN</text>
+      <text x="320" y="14" text-anchor="middle">VERCEL</text>
+      <text x="450" y="14" text-anchor="middle">RAILWAY</text>
+      <text x="580" y="14" text-anchor="middle">FLY.IO</text>
+      <text x="710" y="14" text-anchor="middle">DOCKER</text>
+    </g>
+    <line x1="0" y1="24" x2="740" y2="24" stroke="#404040"/>
+
+    <!-- Row 1: CVE-2025-29927 -->
+    <g transform="translate(0,40)">
+      <text x="0" y="14" font-size="12" fill="#e5e7eb">CVE-2025-29927</text>
+      <text x="0" y="30" font-size="10" fill="#737373">Next.js auth bypass</text>
+      <g transform="translate(290,0)">
+        <rect width="60" height="22" rx="11" fill="#1e3a8a"/>
+        <text x="30" y="15" text-anchor="middle" font-size="10" font-weight="700" fill="#bfdbfe">LOW</text>
+      </g>
+      <g transform="translate(420,0)">
+        <rect width="60" height="22" rx="11" fill="#7f1d1d"/>
+        <text x="30" y="15" text-anchor="middle" font-size="10" font-weight="700" fill="#fecaca">CRITICAL</text>
+      </g>
+      <g transform="translate(550,0)">
+        <rect width="60" height="22" rx="11" fill="#7f1d1d"/>
+        <text x="30" y="15" text-anchor="middle" font-size="10" font-weight="700" fill="#fecaca">CRITICAL</text>
+      </g>
+      <g transform="translate(680,0)">
+        <rect width="60" height="22" rx="11" fill="#7f1d1d"/>
+        <text x="30" y="15" text-anchor="middle" font-size="10" font-weight="700" fill="#fecaca">CRITICAL</text>
+      </g>
+    </g>
+
+    <!-- Row 2: CVE-2024-34351 -->
+    <g transform="translate(0,84)">
+      <text x="0" y="14" font-size="12" fill="#e5e7eb">CVE-2024-34351</text>
+      <text x="0" y="30" font-size="10" fill="#737373">Next.js SSRF (remotePatterns)</text>
+      <g transform="translate(290,0)">
+        <rect width="60" height="22" rx="11" fill="#1e3a8a"/>
+        <text x="30" y="15" text-anchor="middle" font-size="10" font-weight="700" fill="#bfdbfe">LOW</text>
+      </g>
+      <g transform="translate(420,0)">
+        <rect width="60" height="22" rx="11" fill="#7c2d12"/>
+        <text x="30" y="15" text-anchor="middle" font-size="10" font-weight="700" fill="#fed7aa">HIGH</text>
+      </g>
+      <g transform="translate(550,0)">
+        <rect width="60" height="22" rx="11" fill="#7c2d12"/>
+        <text x="30" y="15" text-anchor="middle" font-size="10" font-weight="700" fill="#fed7aa">HIGH</text>
+      </g>
+      <g transform="translate(680,0)">
+        <rect width="60" height="22" rx="11" fill="#7c2d12"/>
+        <text x="30" y="15" text-anchor="middle" font-size="10" font-weight="700" fill="#fed7aa">HIGH</text>
+      </g>
+    </g>
+
+    <!-- Row 3: Hardcoded secret -->
+    <g transform="translate(0,128)">
+      <text x="0" y="14" font-size="12" fill="#e5e7eb">Hardcoded OpenAI key</text>
+      <text x="0" y="30" font-size="10" fill="#737373">C3 · same risk everywhere</text>
+      <g transform="translate(290,0)">
+        <rect width="60" height="22" rx="11" fill="#7f1d1d"/>
+        <text x="30" y="15" text-anchor="middle" font-size="10" font-weight="700" fill="#fecaca">CRITICAL</text>
+      </g>
+      <g transform="translate(420,0)">
+        <rect width="60" height="22" rx="11" fill="#7f1d1d"/>
+        <text x="30" y="15" text-anchor="middle" font-size="10" font-weight="700" fill="#fecaca">CRITICAL</text>
+      </g>
+      <g transform="translate(550,0)">
+        <rect width="60" height="22" rx="11" fill="#7f1d1d"/>
+        <text x="30" y="15" text-anchor="middle" font-size="10" font-weight="700" fill="#fecaca">CRITICAL</text>
+      </g>
+      <g transform="translate(680,0)">
+        <rect width="60" height="22" rx="11" fill="#7f1d1d"/>
+        <text x="30" y="15" text-anchor="middle" font-size="10" font-weight="700" fill="#fecaca">CRITICAL</text>
+      </g>
+    </g>
+    <line x1="0" y1="172" x2="740" y2="172" stroke="#404040"/>
+    <text x="0" y="194" font-size="10" fill="#737373">↑ Vercel patches Next.js CVEs automatically; other platforms don't.</text>
+  </g>
+
+  <!-- Tri-state outcomes -->
+  <g transform="translate(80,310)" font-family="ui-sans-serif, system-ui, sans-serif">
+    <text x="0" y="0" font-size="13" font-weight="700" fill="#e5e7eb" letter-spacing="1">TRI-STATE OUTCOMES · "never produce a finding it can't defend"</text>
+
+    <g transform="translate(0,16)">
+      <rect width="240" height="100" rx="8" fill="#7f1d1d" opacity="0.85"/>
+      <text x="14" y="22" font-size="12" font-weight="700" fill="#ffffff">🔴 FINDING</text>
+      <text x="14" y="42" font-size="11" fill="#fecaca">deterministic match, defensible</text>
+      <text x="14" y="58" font-size="11" fill="#fecaca">evidence with file:line</text>
+      <text x="14" y="74" font-size="11" fill="#fecaca">action: fix before deploy</text>
+      <text x="14" y="92" font-family="ui-monospace, Menlo, monospace" font-size="10" fill="#fde047">exit 1</text>
+    </g>
+    <g transform="translate(252,16)">
+      <rect width="240" height="100" rx="8" fill="#7c2d12" opacity="0.85"/>
+      <text x="14" y="22" font-size="12" font-weight="700" fill="#ffffff">🟡 UNCERTAIN</text>
+      <text x="14" y="42" font-size="11" fill="#fed7aa">pattern matched, context unclear</text>
+      <text x="14" y="58" font-size="11" fill="#fed7aa">manual-check item</text>
+      <text x="14" y="74" font-size="11" fill="#fed7aa">action: review, don't auto-block</text>
+      <text x="14" y="92" font-family="ui-monospace, Menlo, monospace" font-size="10" fill="#fde047">exit 0 + note</text>
+    </g>
+    <g transform="translate(504,16)">
+      <rect width="240" height="100" rx="8" fill="#14532d" opacity="0.85"/>
+      <text x="14" y="22" font-size="12" font-weight="700" fill="#ffffff">🟢 CLEAN</text>
+      <text x="14" y="42" font-size="11" fill="#bbf7d0">all 9 checks pass</text>
+      <text x="14" y="58" font-size="11" fill="#bbf7d0">no findings, no warnings</text>
+      <text x="14" y="74" font-size="11" fill="#bbf7d0">action: ship it</text>
+      <text x="14" y="92" font-family="ui-monospace, Menlo, monospace" font-size="10" fill="#fde047">exit 0</text>
+    </g>
+  </g>
+</svg>
