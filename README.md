@@ -1,9 +1,21 @@
-# predeploy-audit
+<div align="center">
+
+<img src="docs/images/banner.svg" alt="predeploy-audit — a tiny, fast, low-noise deploy audit for indie Next.js apps" width="900"/>
 
 [![regression](https://github.com/Anic888/predeploy-audit-nextjs/actions/workflows/regression.yml/badge.svg)](https://github.com/Anic888/predeploy-audit-nextjs/actions/workflows/regression.yml)
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](./LICENSE)
+[![Speed](https://img.shields.io/badge/scan-~80ms-10b981.svg)](#tested-against-a-frozen-demo--6-edge-case-fixtures)
+[![Dependencies](https://img.shields.io/badge/dependencies-zero-06b6d4.svg)](./skill/scanner)
+[![Checks](https://img.shields.io/badge/checks-9-f59e0b.svg)](#what-it-catches)
+[![Targets](https://img.shields.io/badge/Next.js_·_Supabase_·_Stripe-supported-8b5cf6.svg)](#framework-specific-findings)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE)
 
-> A tiny, fast, low-noise deploy audit for vibe-coded Next.js apps.
+**Catch the small handful of deploy mistakes that actually bite indie devs.**
+
+</div>
+
+---
+
+## Why this exists
 
 You built something over a weekend. It works. You're about to push to
 Vercel, Railway, or Fly.io. You're not a security engineer and you don't
@@ -18,6 +30,60 @@ node skill/scanner/predeploy-audit.mjs <path-to-your-app>
 
 **~80 ms.** Zero dependencies. Deterministic. Designed to never produce a
 finding it can't defend.
+
+---
+
+## What's inside
+
+```mermaid
+flowchart LR
+    subgraph App["📦 Your app"]
+        Src[src/**/*.{ts,tsx,js}]
+        Cfg[next.config.* · package.json]
+        Env[.env* · .gitignore]
+        Git[.git history]
+    end
+
+    subgraph Scan["🔍 predeploy-audit · ~80 ms"]
+        C1["C1-C2 env-in-git"]
+        C3["C3 hardcoded keys"]
+        C4["C4 PUBLIC_ secrets"]
+        C5["C5 supabase srv-role"]
+        C6["C6 stripe webhook"]
+        C7["C7 supabase RLS"]
+        C8["C8 next CVE · platform-aware"]
+        C9["C9 image SSRF"]
+    end
+
+    subgraph Plat["🚀 Deploy target"]
+        Vercel
+        Railway
+        FlyIo[Fly.io]
+        Docker
+    end
+
+    subgraph Out["📋 Tri-state"]
+        Find["🔴 finding"]
+        Maybe["🟡 uncertain"]
+        Clean["🟢 clean"]
+    end
+
+    App --> Scan
+    Plat -.platform context.-> C8
+    Scan --> Find
+    Scan --> Maybe
+    Scan --> Clean
+
+    style Scan fill:#0a0a0a,color:#fbbf24,stroke:#f59e0b
+    style Plat fill:#0c1438,color:#bfdbfe,stroke:#3b82f6
+    style Out fill:#0c0a09,color:#bbf7d0,stroke:#10b981
+```
+
+<div align="center">
+  <img src="docs/images/platform-matrix.svg" alt="Severity matrix — same CVE scored differently by deploy target — and tri-state outcomes" width="800"/>
+  <br/>
+  <sub><i>Same CVE, different severity by platform (top) — and three honest outcomes (bottom).</i></sub>
+</div>
 
 ---
 
